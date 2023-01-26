@@ -15,6 +15,10 @@ class ViewController: UIViewController {
     
     var seconds = [Int]()
     
+    var chosenHours = 0
+    var chosenMinutes = 0
+    var chosenSeconds = 0
+    
     var imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(systemName: "")
@@ -69,7 +73,7 @@ class ViewController: UIViewController {
         button.configuration?.baseBackgroundColor = .systemGreen
         button.configuration?.baseForegroundColor = .white
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.addTarget(self, action: #selector(setTimer), for: .touchUpInside)
+//        button.addTarget(self, action: #selector(setTimer), for: .touchUpInside)
         return button
     }()
 
@@ -84,6 +88,8 @@ class ViewController: UIViewController {
         configureUI()
         
         setArrays()
+        
+        setTimerButton.addTarget(self, action: #selector(setTimer), for: .touchUpInside)
     }
     
     func configureUI() {
@@ -156,6 +162,14 @@ class ViewController: UIViewController {
     
     @objc func setTimer() {
         print("Set timer button pressed")
+        let circleCountdownVC = CircleCountdownVC()
+        
+        circleCountdownVC.selectedHours = chosenHours
+        circleCountdownVC.selectedMinutes = chosenMinutes
+        circleCountdownVC.selectedSeconds = chosenSeconds
+        
+        self.present(circleCountdownVC, animated: true)
+        
     }
 }
 
@@ -189,14 +203,17 @@ extension ViewController: UIPickerViewDelegate, UIPickerViewDataSource {
         switch component {
         case 0:
             hoursLabel.text = "\(hours[row]) hours"
+            chosenHours = hours[row]
         case 1:
             return
         case 2:
             minutesLabel.text = "\(minutes[row]) minutes"
+            chosenMinutes = minutes[row]
         case 3:
             return
         case 4:
             secondsLabel.text = "\(seconds[row]) seconds"
+            chosenSeconds = seconds[row]
         case 5:
             return
         default:

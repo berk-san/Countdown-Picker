@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C0A015352982EF5E0052D3AC /* CircleCountdownVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0A015342982EF5E0052D3AC /* CircleCountdownVC.swift */; };
 		C0B1B0D42981843B0074CBE5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0B1B0D32981843B0074CBE5 /* AppDelegate.swift */; };
 		C0B1B0D62981843B0074CBE5 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0B1B0D52981843B0074CBE5 /* SceneDelegate.swift */; };
 		C0B1B0D82981843B0074CBE5 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0B1B0D72981843B0074CBE5 /* ViewController.swift */; };
@@ -16,6 +17,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		C0A015342982EF5E0052D3AC /* CircleCountdownVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleCountdownVC.swift; sourceTree = "<group>"; };
 		C0B1B0D02981843B0074CBE5 /* CountdownPicker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CountdownPicker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C0B1B0D32981843B0074CBE5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C0B1B0D52981843B0074CBE5 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -63,6 +65,7 @@
 				C0B1B0DC2981843D0074CBE5 /* Assets.xcassets */,
 				C0B1B0DE2981843D0074CBE5 /* LaunchScreen.storyboard */,
 				C0B1B0E12981843D0074CBE5 /* Info.plist */,
+				C0A015342982EF5E0052D3AC /* CircleCountdownVC.swift */,
 			);
 			path = CountdownPicker;
 			sourceTree = "<group>";
@@ -140,6 +143,7 @@
 			files = (
 				C0B1B0D82981843B0074CBE5 /* ViewController.swift in Sources */,
 				C0B1B0D42981843B0074CBE5 /* AppDelegate.swift in Sources */,
+				C0A015352982EF5E0052D3AC /* CircleCountdownVC.swift in Sources */,
 				C0B1B0D62981843B0074CBE5 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
