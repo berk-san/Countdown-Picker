@@ -15,13 +15,9 @@ class ViewController: UIViewController {
     
     var seconds = [Int]()
     
-    var numbers = [1, 2, 3, 4, 5]
-    
-    var letters = ["a", "b", "c", "d", "e", "f", "g", "h"]
-    
     var imageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = UIImage(systemName: "star")
+        imageView.image = UIImage(systemName: "")
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
@@ -34,27 +30,27 @@ class ViewController: UIViewController {
     
     var hoursLabel: UILabel = {
         let label = UILabel()
-        label.text = "Star"
+        label.text = ""
         label.textAlignment = .center
-        label.numberOfLines = 0
+        label.numberOfLines = 1
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
     var secondsLabel: UILabel = {
         let label = UILabel()
-        label.text = "Star"
-        label.textAlignment = .center
-        label.numberOfLines = 0
+        label.text = ""
+        label.textAlignment = .left
+        label.numberOfLines = 1
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
     var minutesLabel: UILabel = {
         let label = UILabel()
-        label.text = "Star"
-        label.textAlignment = .center
-        label.numberOfLines = 0
+        label.text = ""
+        label.textAlignment = .left
+        label.numberOfLines = 1
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -65,7 +61,17 @@ class ViewController: UIViewController {
         return picker
     }()
     
-    
+    var setTimerButton: UIButton = {
+        let button = UIButton()
+        
+        button.configuration = .filled()
+        button.configuration?.title = "Set Timer"
+        button.configuration?.baseBackgroundColor = .systemGreen
+        button.configuration?.baseForegroundColor = .white
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: #selector(setTimer), for: .touchUpInside)
+        return button
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -90,9 +96,16 @@ class ViewController: UIViewController {
             imageView.heightAnchor.constraint(equalToConstant: 100)
         ])
         
+        view.addSubview(pickerView)
+        NSLayoutConstraint.activate([
+            pickerView.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 50),
+            pickerView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            pickerView.widthAnchor.constraint(equalToConstant: view.frame.size.width - 50)
+        ])
+        
         view.addSubview(stackView)
         NSLayoutConstraint.activate([
-            stackView.topAnchor.constraint(equalTo: imageView.topAnchor, constant: 100),
+            stackView.topAnchor.constraint(equalTo: pickerView.bottomAnchor, constant: 50),
             stackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             stackView.widthAnchor.constraint(equalToConstant: 300),
             stackView.heightAnchor.constraint(equalToConstant: 100)
@@ -119,11 +132,11 @@ class ViewController: UIViewController {
             secondsLabel.widthAnchor.constraint(equalToConstant: 100)
         ])
         
-        view.addSubview(pickerView)
+        view.addSubview(setTimerButton)
         NSLayoutConstraint.activate([
-            pickerView.topAnchor.constraint(equalTo: hoursLabel.bottomAnchor, constant: 100),
-            pickerView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            pickerView.widthAnchor.constraint(equalToConstant: view.frame.size.width - 20)
+            setTimerButton.topAnchor.constraint(equalTo: stackView.bottomAnchor, constant: 30),
+            setTimerButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            setTimerButton.widthAnchor.constraint(equalToConstant: pickerView.frame.size.width - 80)
         ])
     }
     
@@ -139,6 +152,10 @@ class ViewController: UIViewController {
         for item in 0...59 {
             seconds.append(item)
         }
+    }
+    
+    @objc func setTimer() {
+        print("Set timer button pressed")
     }
 }
 
@@ -166,27 +183,6 @@ extension ViewController: UIPickerViewDelegate, UIPickerViewDataSource {
         return 6
     }
     
-    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        var title = ""
-        switch component {
-        case 0:
-            title = "\(hours[row])"
-        case 1:
-            title = "hours"
-        case 2:
-            title = "\(minutes[row])"
-        case 3:
-            title = "min"
-        case 4:
-            title = "\(seconds[row])"
-        case 5:
-            title = "sec"
-        default:
-            return ""
-        }
-        return title
-    }
-    
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         print("Time selected")
         
@@ -209,8 +205,8 @@ extension ViewController: UIPickerViewDelegate, UIPickerViewDataSource {
     }
     
     func pickerView(_ pickerView: UIPickerView, widthForComponent component: Int) -> CGFloat {
-        let numberWidth = view.frame.size.width / 6 - 18
-        let labelWidth = view.frame.size.width / 6 + 18
+        let numberWidth = pickerView.frame.size.width / 6 - 30
+        let labelWidth = pickerView.frame.size.width / 6
         switch component {
         case 0, 2, 4:
             return numberWidth
@@ -220,5 +216,66 @@ extension ViewController: UIPickerViewDelegate, UIPickerViewDataSource {
             return 0
         }
     }
+    
+    func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
+        
+                let label = UILabel()
+                switch component {
+                case 0:
+                    label.text = String(hours[row])
+                    label.textAlignment = .center
+                    label.font = .systemFont(ofSize: 20)
+                    return label
+                case 2:
+                    label.text = String(minutes[row])
+                    label.textAlignment = .center
+                    label.font = .systemFont(ofSize: 20)
+                    return label
+                case 4:
+                    label.text = String(seconds[row])
+                    label.textAlignment = .center
+                    label.font = .systemFont(ofSize: 20)
+                    return label
+                case 1:
+                    label.text = "hours"
+                    label.textAlignment = .left
+                    label.font = .systemFont(ofSize: 16)
+                    return label
+                case 3:
+                    label.text = "min"
+                    label.textAlignment = .left
+                    label.font = .systemFont(ofSize: 16)
+                    return label
+                case 5:
+                    label.text = "sec"
+                    label.textAlignment = .left
+                    label.font = .systemFont(ofSize: 16)
+                    return label
+                default:
+                    return label
+                }
+    }
+    
+//    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+//        var title = ""
+//        switch component {
+//        case 0:
+//            title = "\(hours[row])"
+//        case 1:
+//            title = "hours"
+//        case 2:
+//            title = "\(minutes[row])"
+//        case 3:
+//            title = "min"
+//        case 4:
+//            title = "\(seconds[row])"
+//        case 5:
+//            title = "sec"
+//        default:
+//            return ""
+//        }
+//        return title
+//    }
+    
 }
 
