@@ -162,6 +162,9 @@ class ViewController: UIViewController {
     
     @objc func setTimer() {
         print("Set timer button pressed")
+        print(chosenHours)
+        print(chosenMinutes)
+        print(chosenSeconds)
         let circleCountdownVC = CircleCountdownVC()
         
         circleCountdownVC.selectedHours = chosenHours

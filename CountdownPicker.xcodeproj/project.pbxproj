@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		C0A015352982EF5E0052D3AC /* CircleCountdownVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0A015342982EF5E0052D3AC /* CircleCountdownVC.swift */; };
+		C0A0153829837A150052D3AC /* Circle.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0A0153729837A150052D3AC /* Circle.swift */; };
 		C0B1B0D42981843B0074CBE5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0B1B0D32981843B0074CBE5 /* AppDelegate.swift */; };
 		C0B1B0D62981843B0074CBE5 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0B1B0D52981843B0074CBE5 /* SceneDelegate.swift */; };
 		C0B1B0D82981843B0074CBE5 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0B1B0D72981843B0074CBE5 /* ViewController.swift */; };
@@ -18,6 +19,7 @@
 
 /* Begin PBXFileReference section */
 		C0A015342982EF5E0052D3AC /* CircleCountdownVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleCountdownVC.swift; sourceTree = "<group>"; };
+		C0A0153729837A150052D3AC /* Circle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Circle.swift; sourceTree = "<group>"; };
 		C0B1B0D02981843B0074CBE5 /* CountdownPicker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CountdownPicker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C0B1B0D32981843B0074CBE5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C0B1B0D52981843B0074CBE5 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -39,6 +41,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		C0A015362983797B0052D3AC /* CircleCountDown */ = {
+			isa = PBXGroup;
+			children = (
+				C0A015342982EF5E0052D3AC /* CircleCountdownVC.swift */,
+				C0A0153729837A150052D3AC /* Circle.swift */,
+			);
+			path = CircleCountDown;
+			sourceTree = "<group>";
+		};
 		C0B1B0C72981843B0074CBE5 = {
 			isa = PBXGroup;
 			children = (
@@ -65,7 +76,7 @@
 				C0B1B0DC2981843D0074CBE5 /* Assets.xcassets */,
 				C0B1B0DE2981843D0074CBE5 /* LaunchScreen.storyboard */,
 				C0B1B0E12981843D0074CBE5 /* Info.plist */,
-				C0A015342982EF5E0052D3AC /* CircleCountdownVC.swift */,
+				C0A015362983797B0052D3AC /* CircleCountDown */,
 			);
 			path = CountdownPicker;
 			sourceTree = "<group>";
@@ -141,6 +152,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C0A0153829837A150052D3AC /* Circle.swift in Sources */,
 				C0B1B0D82981843B0074CBE5 /* ViewController.swift in Sources */,
 				C0B1B0D42981843B0074CBE5 /* AppDelegate.swift in Sources */,
 				C0A015352982EF5E0052D3AC /* CircleCountdownVC.swift in Sources */,
