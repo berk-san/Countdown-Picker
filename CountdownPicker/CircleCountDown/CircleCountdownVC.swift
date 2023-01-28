@@ -16,6 +16,11 @@ class CircleCountdownVC: UIViewController {
         return circle
     }()
     
+    var digitalTimer: DigitalTimer = {
+       let digitalTimer = DigitalTimer()
+        return digitalTimer
+    }()
+    
     var startButton: UIButton = {
         let button = UIButton()
         button.configuration = .filled()
@@ -30,7 +35,7 @@ class CircleCountdownVC: UIViewController {
         let button = UIButton()
         button.configuration = .filled()
         button.configuration?.title = "Stop"
-        button.configuration?.baseBackgroundColor = .systemGreen
+        button.configuration?.baseBackgroundColor = .systemRed
         button.configuration?.baseForegroundColor = .white
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
@@ -46,48 +51,149 @@ class CircleCountdownVC: UIViewController {
         return button
     }()
     
-    var didTimerStart = false
+    var counterStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.backgroundColor = .systemBackground
+         stackView.translatesAutoresizingMaskIntoConstraints = false
+         return stackView
+    }()
     
+    var hoursLabel: UILabel = {
+      let label = UILabel()
+        label.font = .systemFont(ofSize: 24)
+        label.textAlignment = .center
+        label.numberOfLines = 1
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    var firstColon: UILabel = {
+      let label = UILabel()
+        label.font = .systemFont(ofSize: 24)
+        label.text = ":"
+        label.textAlignment = .center
+        label.numberOfLines = 1
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    var minutesLabel: UILabel = {
+      let label = UILabel()
+        label.font = .systemFont(ofSize: 24)
+        label.textAlignment = .center
+        label.numberOfLines = 1
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    var secondColon: UILabel = {
+      let label = UILabel()
+        label.font = .systemFont(ofSize: 24)
+        label.text = ":"
+        label.textAlignment = .center
+        label.numberOfLines = 1
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    var secondsLabel: UILabel = {
+      let label = UILabel()
+        label.font = .systemFont(ofSize: 24)
+        label.textAlignment = .center
+        label.numberOfLines = 1
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    lazy var messageLabel: UILabel = {
+       let label = UILabel()
+        label.font = .systemFont(ofSize: 24)
+        label.textAlignment = .center
+        label.numberOfLines = 1
+        label.text = "It's Ready"
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    var didTimerStart = false
     var selectedHours = 0
     var selectedMinutes = 0
     var selectedSeconds = 0
-    
     var circleTimerDuration = 0
-    
-//    let innerLayer = CAShapeLayer()
-//    let outerLayer = CAShapeLayer()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         view.backgroundColor = .systemBackground
-        
-        print(selectedHours)
-        print(selectedMinutes)
-        print(selectedSeconds)
-        
         configureUI()
-        
-//        createCountdown()
-        
         circle.setCircleTimer(hours: selectedHours, minutes: selectedMinutes, seconds: selectedSeconds)
+        digitalTimer.setDigitalTimer(hours: selectedHours, minutes: selectedMinutes, seconds: selectedSeconds)
+        digitalTimer.delegate = self
         
         startButton.addTarget(self, action: #selector(startButtonPressed), for: .touchUpInside)
-        
         stopButton.addTarget(self, action: #selector(stopButtonPressed), for: .touchUpInside)
-        
         resetTimerButton.addTarget(self, action: #selector(resetTimerButtonPressed), for: .touchUpInside)
-
+        
+        counterStackView.isHidden = true
+        messageLabel.isHidden = true
+        stopButton.isEnabled = false
     }
     
+    //MARK: - UI Constraints
+    
     func configureUI() {
-        
         view.addSubview(circle)
         NSLayoutConstraint.activate([
             circle.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            circle.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-            circle.widthAnchor.constraint(equalToConstant: 300),
-            circle.heightAnchor.constraint(equalToConstant: 300)
+            circle.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -100)
+        ])
+        view.addSubview(counterStackView)
+        NSLayoutConstraint.activate([
+            counterStackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            counterStackView.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -100),
+            counterStackView.widthAnchor.constraint(equalToConstant: 150),
+            counterStackView.heightAnchor.constraint(equalToConstant: 48)
+        ])
+        counterStackView.addSubview(hoursLabel)
+        NSLayoutConstraint.activate([
+            hoursLabel.leadingAnchor.constraint(equalTo: counterStackView.leadingAnchor),
+            hoursLabel.bottomAnchor.constraint(equalTo: counterStackView.bottomAnchor),
+            hoursLabel.widthAnchor.constraint(equalToConstant: 40),
+            hoursLabel.heightAnchor.constraint(equalTo: counterStackView.heightAnchor)
+        ])
+        counterStackView.addSubview(firstColon)
+        NSLayoutConstraint.activate([
+            firstColon.leadingAnchor.constraint(equalTo: hoursLabel.trailingAnchor),
+            firstColon.bottomAnchor.constraint(equalTo: counterStackView.bottomAnchor),
+            firstColon.widthAnchor.constraint(equalToConstant: 15),
+            firstColon.heightAnchor.constraint(equalTo: counterStackView.heightAnchor)
+        ])
+        counterStackView.addSubview(minutesLabel)
+        NSLayoutConstraint.activate([
+            minutesLabel.leadingAnchor.constraint(equalTo: firstColon.trailingAnchor),
+            minutesLabel.bottomAnchor.constraint(equalTo: counterStackView.bottomAnchor),
+            minutesLabel.widthAnchor.constraint(equalToConstant: 40),
+            minutesLabel.heightAnchor.constraint(equalTo: counterStackView.heightAnchor)
+        ])
+        counterStackView.addSubview(secondColon)
+        NSLayoutConstraint.activate([
+            secondColon.leadingAnchor.constraint(equalTo: minutesLabel.trailingAnchor),
+            secondColon.bottomAnchor.constraint(equalTo: counterStackView.bottomAnchor),
+            secondColon.widthAnchor.constraint(equalToConstant: 15),
+            secondColon.heightAnchor.constraint(equalTo: counterStackView.heightAnchor)
+        ])
+        counterStackView.addSubview(secondsLabel)
+        NSLayoutConstraint.activate([
+            secondsLabel.leadingAnchor.constraint(equalTo: secondColon.trailingAnchor),
+            secondsLabel.trailingAnchor.constraint(equalTo: counterStackView.trailingAnchor),
+            secondsLabel.bottomAnchor.constraint(equalTo: counterStackView.bottomAnchor),
+            secondsLabel.heightAnchor.constraint(equalTo: counterStackView.heightAnchor)
+        ])
+        view.addSubview(messageLabel)
+        NSLayoutConstraint.activate([
+            messageLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            messageLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -100),
+            messageLabel.widthAnchor.constraint(equalToConstant: 150),
+            messageLabel.heightAnchor.constraint(equalToConstant: 48)
         ])
         view.addSubview(startButton)
         NSLayoutConstraint.activate([
@@ -95,74 +201,75 @@ class CircleCountdownVC: UIViewController {
             startButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             startButton.widthAnchor.constraint(equalToConstant: view.frame.size.width / 2)
         ])
-        
         view.addSubview(stopButton)
         NSLayoutConstraint.activate([
             stopButton.topAnchor.constraint(equalTo: view.topAnchor, constant: view.frame.height * 0.7),
             stopButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             stopButton.widthAnchor.constraint(equalToConstant: view.frame.size.width / 2)
         ])
-        
         view.addSubview(resetTimerButton)
         NSLayoutConstraint.activate([
             resetTimerButton.topAnchor.constraint(equalTo: view.topAnchor, constant: view.frame.height * 0.8),
             resetTimerButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             resetTimerButton.widthAnchor.constraint(equalToConstant: view.frame.size.width / 2)
         ])
-        
-        
     }
     
-//    func createCountdown() {
-//
-//        let circularPath = UIBezierPath(arcCenter: CGPoint(x: view.frame.size.width / 2, y: view.frame.size.height / 3), radius: (view.frame.size.width / 3), startAngle: -CGFloat.pi / 2, endAngle: (3 * CGFloat.pi) / 2 , clockwise: true)
-//
-//        innerLayer.path = circularPath.cgPath
-//        innerLayer.fillColor = UIColor.clear.cgColor
-//        innerLayer.strokeColor = UIColor.systemGray5.cgColor
-//        innerLayer.lineWidth = 8
-//        view.layer.addSublayer(innerLayer)
-//
-//        outerLayer.path = circularPath.cgPath
-//        outerLayer.fillColor = UIColor.clear.cgColor
-//        outerLayer.strokeColor = UIColor.systemRed.cgColor
-//        outerLayer.lineWidth = 10
-//        outerLayer.lineCap = .round
-//        outerLayer.strokeEnd = 0
-//        view.layer.addSublayer(outerLayer)
-//
-////        view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(startAnimation)))
-//    }
+    //MARK: - Button Actions
     
     @objc func startButtonPressed() {
-        print("@objc func startButtonPressed")
+        messageLabel.isHidden = true
+        counterStackView.isHidden = false
+        stopButton.isEnabled = true
         
         if !didTimerStart {
-            
             circle.start()
+            digitalTimer.start()
             startButton.configuration?.title = "Pause"
             startButton.configuration?.baseBackgroundColor = .systemRed
             didTimerStart = true
         } else {
-            
             circle.pause()
+            digitalTimer.pause()
             startButton.configuration?.title = "Resume"
-            startButton.configuration?.baseBackgroundColor = .systemBlue
+            startButton.configuration?.baseBackgroundColor = .systemGreen
             didTimerStart = false
         }
     }
     
     @objc func stopButtonPressed() {
-        print("@objc func stopButtonPressed")
-        
         circle.stop()
+        digitalTimer.stop()
+        digitalTimer.setDigitalTimer(hours: selectedHours, minutes: selectedMinutes, seconds: selectedSeconds)
         startButton.configuration?.title = "Start"
+        startButton.configuration?.baseBackgroundColor = .systemGreen
+        stopButton.isEnabled = false
         didTimerStart = false
     }
     
     @objc func resetTimerButtonPressed() {
-        print("@objc func resetTimerButtonPressed()")
         self.dismiss(animated: true)
     }
 
+}
+
+//MARK: - DigitalTimer Delegate
+
+extension CircleCountdownVC: DigitalTimerDelagte {
+    func countdownDigitalTimer(time: (hours: String, minutes: String, seconds: String)) {
+        hoursLabel.text = time.hours
+        minutesLabel.text = time.minutes
+        secondsLabel.text = time.seconds
+    }
+    
+    func digitalTimerDone() {
+        counterStackView.isHidden = true
+        messageLabel.isHidden = false
+        secondsLabel.text = String(selectedSeconds)
+        didTimerStart = false
+        stopButton.isEnabled = false
+        startButton.setTitle("Start", for: .normal)
+        startButton.isEnabled = false
+        startButton.configuration?.baseBackgroundColor = .systemGreen
+    }
 }

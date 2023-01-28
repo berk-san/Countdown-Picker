@@ -15,6 +15,7 @@
 		C0B1B0DB2981843B0074CBE5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C0B1B0D92981843B0074CBE5 /* Main.storyboard */; };
 		C0B1B0DD2981843D0074CBE5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C0B1B0DC2981843D0074CBE5 /* Assets.xcassets */; };
 		C0B1B0E02981843D0074CBE5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C0B1B0DE2981843D0074CBE5 /* LaunchScreen.storyboard */; };
+		C0C8CB0C2984E7FC00C9D1F8 /* DigitalTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0C8CB0B2984E7FC00C9D1F8 /* DigitalTimer.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +29,7 @@
 		C0B1B0DC2981843D0074CBE5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C0B1B0DF2981843D0074CBE5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		C0B1B0E12981843D0074CBE5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C0C8CB0B2984E7FC00C9D1F8 /* DigitalTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DigitalTimer.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -46,6 +48,7 @@
 			children = (
 				C0A015342982EF5E0052D3AC /* CircleCountdownVC.swift */,
 				C0A0153729837A150052D3AC /* Circle.swift */,
+				C0C8CB0B2984E7FC00C9D1F8 /* DigitalTimer.swift */,
 			);
 			path = CircleCountDown;
 			sourceTree = "<group>";
@@ -154,6 +157,7 @@
 			files = (
 				C0A0153829837A150052D3AC /* Circle.swift in Sources */,
 				C0B1B0D82981843B0074CBE5 /* ViewController.swift in Sources */,
+				C0C8CB0C2984E7FC00C9D1F8 /* DigitalTimer.swift in Sources */,
 				C0B1B0D42981843B0074CBE5 /* AppDelegate.swift in Sources */,
 				C0A015352982EF5E0052D3AC /* CircleCountdownVC.swift in Sources */,
 				C0B1B0D62981843B0074CBE5 /* SceneDelegate.swift in Sources */,
